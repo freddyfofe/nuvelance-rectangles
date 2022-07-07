@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.faforerof.rectangles.services.implementation.RectangleOperationTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.238 s <<< FAILURE! - in com.faforerof.rectangles.services.implementation.RectangleOperationTest
+containsTrue  Time elapsed: 0.229 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at com.faforerof.rectangles.services.implementation.RectangleOperationTest.containsTrue(RectangleOperationTest.java:31)
+
+intersectsTrue  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at com.faforerof.rectangles.services.implementation.RectangleOperationTest.intersectsTrue(RectangleOperationTest.java:24)
+
+adjacentTrue  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at com.faforerof.rectangles.services.implementation.RectangleOperationTest.adjacentTrue(RectangleOperationTest.java:38)
+
