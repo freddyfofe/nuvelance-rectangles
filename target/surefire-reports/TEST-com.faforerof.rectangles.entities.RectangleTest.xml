@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.802" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.faforerof.rectangles.entities.RectangleTest" time="0.017" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,12 +60,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="containsTrue" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.017"/>
-  <testcase name="containsFalse" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.002"/>
-  <testcase name="adjacentTrueWithProper" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.002"/>
-  <testcase name="adjacentTrueWithSubLine" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.002"/>
-  <testcase name="intersectsTrue" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.002"/>
-  <testcase name="adjacentTrueWithPartial" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.001"/>
-  <testcase name="adjacentFalse" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.001"/>
-  <testcase name="intersectsFalse" classname="com.faforerof.rectangles.services.implementation.RectangleOperationTest" time="0.001"/>
+  <testcase name="getBottomLeftPoint" classname="com.faforerof.rectangles.entities.RectangleTest" time="0.013"/>
+  <testcase name="getTopRightPoint" classname="com.faforerof.rectangles.entities.RectangleTest" time="0"/>
 </testsuite>

@@ -1,5 +1,5 @@
 com\faforerof\rectangles\services\implementation\RectangleOperationLocal.class
-com\faforerof\rectangles\services\RectangleOperation.class
 com\faforerof\rectangles\entities\Rectangle.class
+com\faforerof\rectangles\services\RectangleOperation.class
 com\faforerof\rectangles\view\ConsoleView.class
 com\faforerof\rectangles\RectanglesApplication.class
