@@ -23,15 +23,15 @@ public class RectangleOperationLocal implements RectangleOperation {
 
     @Override
     public boolean intersects(Rectangle r1, Rectangle r2) {
-        if (r1.getTopRightPoint().getY() < r2.getBottomLeftPoint().getY()
-                || r1.getBottomLeftPoint().getY() > r2.getTopRightPoint().getY()) {
-            return false;
-        }
-        if (r1.getTopRightPoint().getX() < r2.getBottomLeftPoint().getX()
-                || r1.getBottomLeftPoint().getX() > r2.getTopRightPoint().getX()) {
-            return false;
-        }
-        return true;
+
+        Long intersections = r1.getLines().stream().map(
+                line1 ->
+                        r2.getLines().stream().map(line2 ->
+                                areLinesIntersecting(line1, line2))
+                                .collect(Collectors.toList())
+        ).flatMap(List::stream).filter(aBoolean -> aBoolean).collect(Collectors.toList()).stream().count();
+
+        return intersections != 0 && intersections % 2 == 0;
     }
 
     @Override
@@ -69,6 +69,40 @@ public class RectangleOperationLocal implements RectangleOperation {
             return result.get();
         }
         return Adjacency.NOT;
+    }
+
+    /**
+     * Defines if two Lines intersects each other
+     * @param line
+     * @param line2
+     * @return
+     */
+    private boolean areLinesIntersecting(Line line, Line line2) {
+        double d1 = line.getEnd().getX() - line.getStart().getX();
+        double m1 = (line.getEnd().getY() - line.getStart().getY()) / d1;
+        double b1 = m1 * line.getStart().getX()*(-1) + line.getStart().getY();
+        double d2 = line2.getEnd().getX() - line2.getStart().getX();
+        double m2 = (line2.getEnd().getY() - line2.getStart().getY()) / d2;
+        double b2 = m2 * line2.getStart().getX()*(-1) + line2.getStart().getY();
+        double x;
+        double y;
+        if (d1 == 0 && d2 == 0) {
+            return false;
+        } else if (m1 == m2) {
+            return false;
+        } else if (d1 == 0 && d2 != 0) {
+            x = line.getStart().getX();
+            y = m2*x + b2;
+        } else if (d1 != 0 && d2 == 0) {
+            x = line2.getStart().getX();
+            y = m1*x + b1;
+        } else {
+            x = (b2 - b1) / (m1 - m2);
+            y = m1*x + b1;
+        }
+        Point point = new Point(x, y);
+        return isPointInLineBoundsExclusive(point, line)
+                && isPointInLineBoundsExclusive(point, line2);
     }
 
     /**
@@ -143,7 +177,7 @@ public class RectangleOperationLocal implements RectangleOperation {
     private boolean isPointInLine(Point point, Line line) {
         if ((line.getEnd().getX()-line.getStart().getX()) != 0) {
             double m = (line.getEnd().getY() - line.getStart().getY()) / (line.getEnd().getX() - line.getStart().getX());
-            double b = line.getStart().getX();
+            double b = m * line.getStart().getX()*(-1) + line.getStart().getY();
             double x = point.getX();
             double y = m * x + b;
             return isAccurate(point.getY(), y);

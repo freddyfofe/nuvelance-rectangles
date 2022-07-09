@@ -35,7 +35,11 @@ class RectangleOperationTest {
     @Test
     void intersectsTrue() {
         Rectangle r1 = new Rectangle(0.0, 0.0, 10.0, 10.0);
-        Rectangle r2 = new Rectangle(1.0, 0.0, 5.0, 100.0);
+        Rectangle r2 = new Rectangle(1.0, 1.0, 10.0, 10.0);
+        Assertions.assertTrue(testObject.intersects(r1, r2));
+
+        r1 = new Rectangle(0.0, 0.0, 10.0, 10.0, 45.0);
+        r2 = new Rectangle(1.0, 0.0, 10.0, 10.0, 45.0);
         Assertions.assertTrue(testObject.intersects(r1, r2));
     }
 

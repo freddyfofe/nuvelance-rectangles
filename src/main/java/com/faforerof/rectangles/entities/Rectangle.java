@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,18 +66,38 @@ public class Rectangle {
 
     public Point getTopRightPoint() {
         var rad = Math.toRadians(orientation%360);
-
         double trX = x + width*Math.cos(rad) - width*Math.sin(rad);
         double trY = y + height*Math.sin(rad) + height*Math.cos(rad);
 
         return new Point(trX, trY);
     }
 
+    public List<Point> getPoints() {
+        var rad = Math.toRadians(orientation%360);
+
+        double x1 = x + width*Math.cos(rad);
+        double y1 = y + height*Math.sin(rad);
+
+        double x2 = x + width*Math.cos(rad) - width*Math.sin(rad);
+        double y2 = y + height*Math.sin(rad) + height*Math.cos(rad);
+
+        double x3 = x - height*Math.sin(rad);
+        double y3 = y + height*Math.cos(rad);
+
+        Point p = new Point(x, y);
+        Point p1 = new Point(x1,y1);
+        Point p2 = new Point(x2,y2);
+        Point p3 = new Point(x3,y3);
+
+        return Arrays.asList(p, p1, p2, p3);
+    }
+
     public List<Line> getLines() {
-        Line l1 = new Line(new Point(x,y), new Point(x + width, y));
-        Line l2 = new Line(new Point(x+width,y), new Point(x + width, y + height));
-        Line l3 = new Line(new Point(x + width,y + height), new Point(x, y + height));
-        Line l4 = new Line(new Point(x,y + height), new Point(x, y));
+        List<Point> p = this.getPoints();
+        Line l1 = new Line(p.get(0), p.get(1));
+        Line l2 = new Line(p.get(1), p.get(2));
+        Line l3 = new Line(p.get(2), p.get(3));
+        Line l4 = new Line(p.get(3), p.get(0));
         return Arrays.asList(l1, l2, l3, l4);
     }
 }
