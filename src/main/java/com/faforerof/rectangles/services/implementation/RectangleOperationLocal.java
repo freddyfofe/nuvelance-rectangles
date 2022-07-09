@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Simple Implementation of the Rectangles Operations interface
+ */
 @Service
 public class RectangleOperationLocal implements RectangleOperation {
 
@@ -42,6 +45,12 @@ public class RectangleOperationLocal implements RectangleOperation {
         return false;
     }
 
+    /**
+     * Defines if two Rectangles are adjacent or not.
+     * @param r1
+     * @param r2
+     * @return
+     */
     @Override
     public Adjacency adjacent(Rectangle r1, Rectangle r2) {
         if (this.contains(r1, r2) || this.contains(r2, r1)) {
@@ -62,6 +71,12 @@ public class RectangleOperationLocal implements RectangleOperation {
         return Adjacency.NOT;
     }
 
+    /**
+     * Compare two Lines and defines their Adjacency
+     * @param l1
+     * @param l2
+     * @return the Adjacency relationship of the two Lines.
+     */
     private Adjacency compareLines(Line l1, Line l2) {
         if ( arePointsEqualsWithAccuracy(l1.getStart(), l2.getStart())
                 && arePointsEqualsWithAccuracy(l1.getEnd(), l2.getEnd())
@@ -79,17 +94,35 @@ public class RectangleOperationLocal implements RectangleOperation {
         return Adjacency.NOT;
     }
 
+    /**
+     * Determines if one Point is at the start or the end of the Line
+     * @param point
+     * @param line
+     * @return
+     */
     private boolean isPointInLineBoundsExclusive(Point point, Line line) {
         return !arePointsEqualsWithAccuracy(point, line.getStart())
                 && !arePointsEqualsWithAccuracy(point, line.getEnd())
                 && isPointInLineBounds(point, line);
     }
 
+    /**
+     * Determine if two points are near enough to be equals
+     * @param p1
+     * @param p2
+     * @return
+     */
     private boolean arePointsEqualsWithAccuracy(Point p1, Point p2) {
         return isAccurate(p1.getX(), p2.getX())
                 && isAccurate(p1.getY(), p2.getY());
     }
 
+    /**
+     * Determines if the Point is in the Line
+     * @param point
+     * @param line
+     * @return
+     */
     private boolean isPointInLineBounds(Point point, Line line) {
         if (line.getStart().getX() <= point.getX() && point.getX() <= line.getEnd().getX()
             || line.getEnd().getX() <= point.getX() && point.getX() <= line.getStart().getX()) {
@@ -101,6 +134,12 @@ public class RectangleOperationLocal implements RectangleOperation {
         return false;
     }
 
+    /**
+     * Use a Line to define a function and mathematically determines if the point is in the line.
+     * @param point
+     * @param line
+     * @return
+     */
     private boolean isPointInLine(Point point, Line line) {
         if ((line.getEnd().getX()-line.getStart().getX()) != 0) {
             double m = (line.getEnd().getY() - line.getStart().getY()) / (line.getEnd().getX() - line.getStart().getX());
@@ -113,6 +152,12 @@ public class RectangleOperationLocal implements RectangleOperation {
         }
     }
 
+    /**
+     * Gets the accuracy fom application.properties file and compares the numbers
+     * @param a First number
+     * @param b Second number
+     * @return how near are both numbers using the accuracy
+     */
     private boolean isAccurate(Double a, Double b) {
         return Math.abs(a - b) < 1.0/Math.pow(10, rectanglesApplicationUtilities.getAccuracy());
     }

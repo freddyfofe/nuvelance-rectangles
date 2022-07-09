@@ -1,5 +1,6 @@
 package com.faforerof.rectangles.entities;
 
+import com.faforerof.rectangles.exceptions.RectanglesApplicationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -39,5 +40,18 @@ class RectangleTest {
         r = new Rectangle(10.0,10.0,5.0,5.0);
         topRightPoint = new Point(15.0,15.0);
         Assertions.assertEquals(topRightPoint, r.getTopRightPoint());
+    }
+
+    @Test
+    void rectangleCreationWithInvalidParameters () {
+        RectanglesApplicationException thrown = Assertions.assertThrows(RectanglesApplicationException.class, () -> {
+            new Rectangle(0.0,0.0,0.0,1.0);
+        });
+        Assertions.assertEquals("Height can not be 0", thrown.getMessage());
+
+        thrown = Assertions.assertThrows(RectanglesApplicationException.class, () -> {
+            new Rectangle(0.0,0.0,1.0,0.0);
+        });
+        Assertions.assertEquals("Width can not be 0", thrown.getMessage());
     }
 }

@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Point class to define one vertex for the rectangle class
+ */
 @AllArgsConstructor
 @Getter
 @Setter
