@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,24 @@ public class RectangleOperationLocal implements RectangleOperation {
         return intersections != 0 && intersections % 2 == 0;
     }
 
+    /**
+     * Returns the containment of two rectangles
+     * @param r1
+     * @param r2
+     * @return true if Rectangle r2 is inside of Rectangle r1
+     */
     @Override
     public boolean contains(Rectangle r1, Rectangle r2) {
-        if (r1.getTopRightPoint().getY() >= r2.getTopRightPoint().getY()
-                && r1.getTopRightPoint().getX() >= r2.getTopRightPoint().getX()
-                && r1.getBottomLeftPoint().getY() <= r2.getBottomLeftPoint().getY()
-                && r1.getBottomLeftPoint().getX() <= r2.getBottomLeftPoint().getX()) {
+        if(intersects(r1, r2)) {
+           return false;
+        }
+
+        List<Point> points = r1.getLines().stream().map(line -> getYValueForXInLine(r2.getX(), line))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (points.get(0).getY() < r2.getY() && r2.getY() < points.get(1).getY()
+                || points.get(1).getY() < r2.getY() && r2.getY() < points.get(0).getY()) {
             return true;
         }
         return false;
@@ -181,9 +194,21 @@ public class RectangleOperationLocal implements RectangleOperation {
             double x = point.getX();
             double y = m * x + b;
             return isAccurate(point.getY(), y);
-        } else {
-            return isAccurate(line.getStart().getX(), point.getX());
         }
+        return isAccurate(line.getStart().getX(), point.getX());
+    }
+
+    private Point getYValueForXInLine(double x, Line line){
+        if ((line.getEnd().getX()-line.getStart().getX()) != 0) {
+            double m = (line.getEnd().getY() - line.getStart().getY()) / (line.getEnd().getX() - line.getStart().getX());
+            double b = m * line.getStart().getX()*(-1) + line.getStart().getY();
+            double y = m * x + b;
+            if (line.getStart().getY() <= y && y <= line.getEnd().getY()
+                    || line.getEnd().getY() <= y && y <= line.getStart().getY()) {
+                return new Point(x, y);
+            }
+        }
+        return null;
     }
 
     /**
