@@ -47,11 +47,14 @@ public class RectangleOperationLocal implements RectangleOperation {
            return false;
         }
 
-        List<Point> points = r1.getLines().stream().map(line -> getYValueForXInLine(r2.getX(), line))
+        List<Point> points = r1.getLines().stream().map(
+                    line -> getYValueForXInLine(r2.getX(), line))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
-        if (points.get(0).getY() < r2.getY() && r2.getY() < points.get(1).getY()
+        if (points.isEmpty()) {
+            return false;
+        } else if (points.get(0).getY() < r2.getY() && r2.getY() < points.get(1).getY()
                 || points.get(1).getY() < r2.getY() && r2.getY() < points.get(0).getY()) {
             return true;
         }
@@ -203,8 +206,8 @@ public class RectangleOperationLocal implements RectangleOperation {
             double m = (line.getEnd().getY() - line.getStart().getY()) / (line.getEnd().getX() - line.getStart().getX());
             double b = m * line.getStart().getX()*(-1) + line.getStart().getY();
             double y = m * x + b;
-            if (line.getStart().getY() <= y && y <= line.getEnd().getY()
-                    || line.getEnd().getY() <= y && y <= line.getStart().getY()) {
+            if (line.getStart().getX() < x && x < line.getEnd().getX()
+                    || line.getEnd().getX() < x && x < line.getStart().getX()) {
                 return new Point(x, y);
             }
         }
