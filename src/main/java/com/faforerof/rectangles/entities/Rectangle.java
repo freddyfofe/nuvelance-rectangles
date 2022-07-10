@@ -2,10 +2,10 @@ package com.faforerof.rectangles.entities;
 
 import com.faforerof.rectangles.exceptions.RectanglesApplicationException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class Rectangle {
     @NonNull
     private Double x;
@@ -52,42 +53,34 @@ public class Rectangle {
         this.width = width;
     }
 
-    /**
-     * Not implemented yet, set to 0.0
-     * @param orientation
-     */
-    private void setOrientation(Double orientation) {
-        this.orientation = orientation;
-    }
-
     public Point getBottomLeftPoint() {
         return new Point(x, y);
     }
 
     public Point getTopRightPoint() {
-        var rad = Math.toRadians(orientation%360);
-        double trX = x + width*Math.cos(rad) - width*Math.sin(rad);
-        double trY = y + height*Math.sin(rad) + height*Math.cos(rad);
+        var rad = Math.toRadians(orientation % 360);
+        double trX = x + width * Math.cos(rad) - width * Math.sin(rad);
+        double trY = y + height * Math.sin(rad) + height * Math.cos(rad);
 
         return new Point(trX, trY);
     }
 
     public List<Point> getPoints() {
-        var rad = Math.toRadians(orientation%360);
+        var rad = Math.toRadians(orientation % 360);
 
-        double x1 = x + width*Math.cos(rad);
-        double y1 = y + height*Math.sin(rad);
+        double x1 = x + width * Math.cos(rad);
+        double y1 = y + height * Math.sin(rad);
 
-        double x2 = x + width*Math.cos(rad) - width*Math.sin(rad);
-        double y2 = y + height*Math.sin(rad) + height*Math.cos(rad);
+        double x2 = x + width * Math.cos(rad) - width * Math.sin(rad);
+        double y2 = y + height * Math.sin(rad) + height * Math.cos(rad);
 
-        double x3 = x - height*Math.sin(rad);
-        double y3 = y + height*Math.cos(rad);
+        double x3 = x - height * Math.sin(rad);
+        double y3 = y + height * Math.cos(rad);
 
         Point p = new Point(x, y);
-        Point p1 = new Point(x1,y1);
-        Point p2 = new Point(x2,y2);
-        Point p3 = new Point(x3,y3);
+        Point p1 = new Point(x1, y1);
+        Point p2 = new Point(x2, y2);
+        Point p3 = new Point(x3, y3);
 
         return Arrays.asList(p, p1, p2, p3);
     }
