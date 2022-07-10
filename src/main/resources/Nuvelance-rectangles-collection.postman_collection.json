@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "c0a6cf78-bfea-41a8-bc40-e0ba52de2756",
+		"name": "Nuvelance-rectangles-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12943694"
+	},
+	"item": [
+		{
+			"name": "Intersects",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rectangleOne\":{\r\n        \"x\": 0.0,\r\n        \"y\": 0.0,\r\n        \"height\": 10.0,\r\n        \"width\": 10.0,\r\n        \"orientation\": 0.0\r\n    },\r\n    \"rectangleTwo\":{\r\n        \"x\": 1.0,\r\n        \"y\": 1.0,\r\n        \"height\": 5.0,\r\n        \"width\": 5.0,\r\n        \"orientation\": 45.0\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/intersects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"intersects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contains",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rectangleOne\":{\r\n        \"x\": 0.0,\r\n        \"y\": 0.0,\r\n        \"height\": 10.0,\r\n        \"width\": 10.0,\r\n        \"orientation\": 0.0\r\n    },\r\n    \"rectangleTwo\":{\r\n        \"x\": 1.0,\r\n        \"y\": 1.0,\r\n        \"height\": 5.0,\r\n        \"width\": 5.0,\r\n        \"orientation\": 45.0\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contains",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contains"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adjacent",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rectangleOne\":{\r\n        \"x\": 0.0,\r\n        \"y\": 0.0,\r\n        \"height\": 10.0,\r\n        \"width\": 10.0,\r\n        \"orientation\": 0.0\r\n    },\r\n    \"rectangleTwo\":{\r\n        \"x\": 1.0,\r\n        \"y\": 1.0,\r\n        \"height\": 5.0,\r\n        \"width\": 5.0,\r\n        \"orientation\": 45.0\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/adjacent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"adjacent"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
