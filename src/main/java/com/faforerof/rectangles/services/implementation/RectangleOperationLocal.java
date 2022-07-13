@@ -25,12 +25,12 @@ public class RectangleOperationLocal implements RectangleOperation {
     @Override
     public boolean intersects(Rectangle r1, Rectangle r2) {
 
-        Long intersections = r1.getLines().stream().map(
+        int intersections = r1.getLines().stream().map(
                 line1 ->
                         r2.getLines().stream().map(line2 ->
                                 areLinesIntersecting(line1, line2))
                                 .collect(Collectors.toList())
-        ).flatMap(List::stream).filter(aBoolean -> aBoolean).collect(Collectors.toList()).stream().count();
+        ).flatMap(List::stream).filter(aBoolean -> aBoolean).collect(Collectors.toList()).size();
 
         return intersections != 0 && intersections % 2 == 0;
     }
@@ -43,22 +43,21 @@ public class RectangleOperationLocal implements RectangleOperation {
      */
     @Override
     public boolean contains(Rectangle r1, Rectangle r2) {
-        if(intersects(r1, r2)) {
-           return false;
-        }
+        for (Point p :
+                r2.getPoints()) {
+            List<Point> points = r1.getLines().stream().map(
+                    line -> getYValueForXInLine(p.getX(), line))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
 
-        List<Point> points = r1.getLines().stream().map(
-                    line -> getYValueForXInLine(r2.getX(), line))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        if (points.isEmpty()) {
-            return false;
-        } else if (points.get(0).getY() < r2.getY() && r2.getY() < points.get(1).getY()
-                || points.get(1).getY() < r2.getY() && r2.getY() < points.get(0).getY()) {
-            return true;
+            if (points.isEmpty()) {
+                return false;
+            } else if ((points.get(0).getY() >= p.getY() || p.getY() >= points.get(1).getY())
+                    && (points.get(1).getY() >= p.getY() || p.getY() >= points.get(0).getY())) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -117,8 +116,8 @@ public class RectangleOperationLocal implements RectangleOperation {
             y = m1*x + b1;
         }
         Point point = new Point(x, y);
-        return isPointInLineBoundsExclusive(point, line)
-                && isPointInLineBoundsExclusive(point, line2);
+        return isPointInLineBounds(point, line)
+                && isPointInLineBounds(point, line2);
     }
 
     /**
