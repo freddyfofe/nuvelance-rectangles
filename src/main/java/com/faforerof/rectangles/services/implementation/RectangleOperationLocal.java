@@ -9,6 +9,7 @@ import com.faforerof.rectangles.utilities.RectanglesApplicationUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,14 +26,26 @@ public class RectangleOperationLocal implements RectangleOperation {
     @Override
     public boolean intersects(Rectangle r1, Rectangle r2) {
 
-        int intersections = r1.getLines().stream().map(
-                line1 ->
-                        r2.getLines().stream().map(line2 ->
-                                areLinesIntersecting(line1, line2))
-                                .collect(Collectors.toList())
-        ).flatMap(List::stream).filter(aBoolean -> aBoolean).collect(Collectors.toList()).size();
+        List<Boolean> results = new ArrayList<>();
+        for (Point p :
+                r2.getPoints()) {
+            List<Point> points = r1.getLines().stream().map(
+                    line -> getYValueForXInLine(p.getX(), line))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
 
-        return intersections != 0 && intersections % 2 == 0;
+            if (points.isEmpty()) {
+                results.add(false);
+            } else if ((points.get(0).getY() >= p.getY() || p.getY() >= points.get(1).getY())
+                    && (points.get(1).getY() >= p.getY() || p.getY() >= points.get(0).getY())) {
+                results.add(false);
+            } else {
+                results.add(true);
+            }
+        }
+
+        return results.stream().filter(aBoolean -> !aBoolean).count()
+                != 0 && results.stream().filter(aBoolean -> aBoolean).count() != 0;
     }
 
     /**
@@ -50,7 +63,7 @@ public class RectangleOperationLocal implements RectangleOperation {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
-            if (points.isEmpty()) {
+            if (points.isEmpty() || points.size() < 2) {
                 return false;
             } else if ((points.get(0).getY() >= p.getY() || p.getY() >= points.get(1).getY())
                     && (points.get(1).getY() >= p.getY() || p.getY() >= points.get(0).getY())) {

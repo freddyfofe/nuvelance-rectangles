@@ -53,7 +53,18 @@ class RectangleOperationEdgeCasesTest {
     @Test
     void containsFalse() {
         Rectangle r1 = new Rectangle(0.0, 0.0, 10.0, 10.0);
-        Rectangle r2 = new Rectangle(0.0, 0.0, 10.0, 10.0);
+        Rectangle r2 = new Rectangle(0.0, 1.0, 5.0, 5.0, 45.0);
+        Assertions.assertFalse(testObject.contains(r2, r1));
+
+        r1 = new Rectangle(0.0, 0.0, 10.0, 10.0);
+        r2 = new Rectangle(0.0, 0.0, 10.0, 10.0);
         Assertions.assertFalse(testObject.contains(r1, r2));
+    }
+
+    @Test
+    void adjacentFalse() {
+        Rectangle r1 = new Rectangle(0.0, 0.0, 10.0, 10.0);
+        Rectangle r2 = new Rectangle(0.0, 1.0, 5.0, 5.0, 45.0);
+        Assertions.assertEquals(Adjacency.NOT, testObject.adjacent(r1, r2));
     }
 }
