@@ -100,40 +100,6 @@ public class RectangleOperationLocal implements RectangleOperation {
     }
 
     /**
-     * Defines if two Lines intersects each other
-     * @param line
-     * @param line2
-     * @return
-     */
-    private boolean areLinesIntersecting(Line line, Line line2) {
-        double d1 = line.getEnd().getX() - line.getStart().getX();
-        double m1 = (line.getEnd().getY() - line.getStart().getY()) / d1;
-        double b1 = m1 * line.getStart().getX()*(-1) + line.getStart().getY();
-        double d2 = line2.getEnd().getX() - line2.getStart().getX();
-        double m2 = (line2.getEnd().getY() - line2.getStart().getY()) / d2;
-        double b2 = m2 * line2.getStart().getX()*(-1) + line2.getStart().getY();
-        double x;
-        double y;
-        if (d1 == 0 && d2 == 0) {
-            return false;
-        } else if (m1 == m2) {
-            return false;
-        } else if (d1 == 0 && d2 != 0) {
-            x = line.getStart().getX();
-            y = m2*x + b2;
-        } else if (d1 != 0 && d2 == 0) {
-            x = line2.getStart().getX();
-            y = m1*x + b1;
-        } else {
-            x = (b2 - b1) / (m1 - m2);
-            y = m1*x + b1;
-        }
-        Point point = new Point(x, y);
-        return isPointInLineBounds(point, line)
-                && isPointInLineBounds(point, line2);
-    }
-
-    /**
      * Compare two Lines and defines their Adjacency
      * @param l1
      * @param l2
